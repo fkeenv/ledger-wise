@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repositories\UserRepository;
+use App\Repositories\AuthRepository;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -22,7 +22,7 @@ class LoginController extends Controller
      */
     public function store(Request $request)
     {
-        return UserRepository::login($request);
+        return AuthRepository::login($request);
     }
 
     /**
@@ -31,6 +31,6 @@ class LoginController extends Controller
     public function destroy()
     {
         /** @var User $user */
-        return UserRepository::logout($this->user);
+        return AuthRepository::logout($this->user);
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class UserRepository
+class AuthRepository
 {
     /**
      * Create a new class instance.
@@ -34,6 +34,11 @@ class UserRepository
         return response()->json(['message' => 'User created successfully'], Response::HTTP_CREATED);
     }
 
+    public static function forgot(Request $request)
+    {
+        return (new static())->sendResetLink();
+    }
+
     protected function attempt()
     {
         $request = request()->only('email', 'password');
@@ -51,6 +56,13 @@ class UserRepository
             'expires_at' => now()->addDay(1),
             'message' => 'Login successful',
         ], Response::HTTP_OK);
+    }
+
+    protected function sendResetLink()
+    {
+        // TO DO: Send password reset link to user's email
+
+        return response()->json(['message' => 'Password reset link sent to your email'], Response::HTTP_OK);
     }
 
     protected function authenticated()

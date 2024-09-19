@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repositories\UserRepository;
+use App\Repositories\AuthRepository;
 
 class RegistrationController extends Controller
 {
@@ -13,6 +13,6 @@ class RegistrationController extends Controller
      */
     public function store(Request $request)
     {
-        return UserRepository::register($request);
+        return AuthRepository::register($request);
     }
 }

@@ -5,7 +5,9 @@ namespace App\Repositories;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Symfony\Component\HttpFoundation\Response;
+use App\Notifications\ResetPasswordNotification;
 
 class AuthRepository
 {
@@ -29,14 +31,19 @@ class AuthRepository
 
     public static function register(Request $request)
     {
-        $user = User::create($request->only('email', 'name', 'password'));
+        User::create($request->only('email', 'name', 'password'));
 
         return response()->json(['message' => 'User created successfully'], Response::HTTP_CREATED);
     }
 
     public static function forgot(Request $request)
     {
-        return (new static())->sendResetLink();
+        return (new static())->sendResetLink($request);
+    }
+
+    public static function reset(Request $request, User $user)
+    {
+        return (new static())->resetPassword($request, $user);
     }
 
     protected function attempt()
@@ -47,7 +54,6 @@ class AuthRepository
             return $this->invalidCredentials();
         }
 
-        /** @var User $user */
         $user = $this->authenticated();
 
         return response()->json([
@@ -58,13 +64,37 @@ class AuthRepository
         ], Response::HTTP_OK);
     }
 
-    protected function sendResetLink()
+    protected function sendResetLink(Request $request)
     {
         // TO DO: Send password reset link to user's email
+        $email = $request->only('email');
+        $user = User::where('email', $email)->first();
+
+        if (! $user) {
+            return response()->json(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        Notification::route('mail', $user->email)->notify(new ResetPasswordNotification($user));
 
         return response()->json(['message' => 'Password reset link sent to your email'], Response::HTTP_OK);
     }
 
+    protected function resetPassword(Request $request, User $user)
+    {
+        $data = $request->only(['email', 'password', 'password_confirmation']);
+
+        $user->update([
+            'password' => $data['password'],
+        ]);
+
+        return response()->json(['message' => 'Password has been changed successfully.'], Response::HTTP_OK);
+    }
+
+    /**
+     * Get the authenticated user.
+     *
+     * @return User
+     */
     protected function authenticated()
     {
         return Auth::user();

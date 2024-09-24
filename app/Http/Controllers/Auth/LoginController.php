@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\User;
+use App\Models\Tenants\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\AuthRepository;

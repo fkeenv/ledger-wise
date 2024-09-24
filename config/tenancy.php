@@ -44,13 +44,13 @@ return [
          * Connection used as a "template" for the dynamically created tenant database connection.
          * Note: don't name your template connection tenant. That name is reserved by package.
          */
-        'template_tenant_connection' => null,
+        'template_tenant_connection' => 'tenant_template',
 
         /**
          * Tenant database names are created like this:
          * prefix + tenant_id + suffix.
          */
-        'prefix' => 'tenant',
+        'prefix' => 'tenant_',
         'suffix' => '',
 
         /**

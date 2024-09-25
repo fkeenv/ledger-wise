@@ -18,4 +18,24 @@ class EmployeeRepository
     {
         return $this->employee->get();
     }
+
+    public function create(array $data)
+    {
+        return $this->employee->create($data);
+    }
+
+    public function show(Employee $employee)
+    {
+        return $employee;
+    }
+
+    public function update(Employee $employee, array $data)
+    {
+        return tap($employee)->update($data);
+    }
+
+    public function delete(Employee $employee)
+    {
+        return $employee->delete();
+    }
 }

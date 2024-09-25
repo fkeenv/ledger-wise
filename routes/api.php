@@ -5,7 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Tenants\EmployeeController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
-use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 foreach (config('tenancy.central_domains') as $domain) {
@@ -14,7 +14,7 @@ foreach (config('tenancy.central_domains') as $domain) {
     });
 };
 
-Route::middleware(['api', InitializeTenancyBySubdomain::class, PreventAccessFromCentralDomains::class])->group(function () {
+Route::middleware(['api', InitializeTenancyByDomain::class, PreventAccessFromCentralDomains::class])->group(function () {
     Route::post('login', [LoginController::class, 'store'])->name('authenticate.login');
     Route::post('register', [RegistrationController::class, 'store'])->name('authenticate.register');
     Route::post('password/forgot', [ForgotPasswordController::class, 'store'])->name('authenticate.forgot');

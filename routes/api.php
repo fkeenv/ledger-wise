@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Tenants\EmployeeController;
 use App\Http\Controllers\Auth\RegistrationController;
+use App\Http\Controllers\Tenants\DepartmentController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -26,6 +27,7 @@ Route::middleware(['api', InitializeTenancyByDomain::class, PreventAccessFromCen
         Route::prefix('hris')->group(function () {
             Route::apiResources([
                 'employees' => EmployeeController::class,
+                'departments' => DepartmentController::class,
             ]);
         });
     });

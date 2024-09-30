@@ -15,7 +15,7 @@ foreach (config('tenancy.central_domains') as $domain) {
     });
 };
 
-Route::middleware(['api', InitializeTenancyByDomain::class, PreventAccessFromCentralDomains::class])->group(function () {
+Route::middleware(['api', 'universal', InitializeTenancyByDomain::class, PreventAccessFromCentralDomains::class])->group(function () {
     Route::post('login', [LoginController::class, 'store'])->name('authenticate.login');
     Route::post('register', [RegistrationController::class, 'store'])->name('authenticate.register');
     Route::post('password/forgot', [ForgotPasswordController::class, 'store'])->name('authenticate.forgot');

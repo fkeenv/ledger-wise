@@ -19,7 +19,7 @@ class EmployeeRequest extends BaseRequest
                 'middle_name'   => 'nullable|string',
                 'last_name'     => 'required|string',
                 'gender'        => 'required|in:male,female',
-                'mobile_number' => 'required|string|max:11',
+                'mobile_number' => 'required|string',
                 'birth_date'    => 'required|date',
             ],
             'PUT', 'PATCH' => [
@@ -27,7 +27,7 @@ class EmployeeRequest extends BaseRequest
                 'middle_name'   => 'nullable|string',
                 'last_name'     => 'required|string',
                 'gender'        => 'required|in:male,female',
-                'mobile_number' => 'required|string|max:11',
+                'mobile_number' => 'required|string',
                 'birth_date'    => 'required|date',
             ]
         };

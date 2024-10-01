@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Tenants;
+namespace App\Http\Controllers\Tenants\HRIS;
 
-use App\Models\Tenants\Department;
 use App\Http\Controllers\Controller;
+use App\Models\Tenants\HRIS\Department;
 use App\Repositories\DepartmentRepository;
-use App\Http\Requests\Tenants\DepartmentRequest;
+use App\Http\Requests\Tenants\HRIS\DepartmentRequest;
 
 class DepartmentController extends Controller
 {

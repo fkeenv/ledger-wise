@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Tenants;
+namespace App\Http\Requests\Tenants\HRIS;
 
 use App\Http\Requests\BaseRequest;
 
@@ -15,13 +15,13 @@ class DepartmentRequest extends BaseRequest
     {
         return match ($this->method()) {
             'POST' => [
-                'parent_id' => ['nullable', 'integer'],
-                'name'      => ['required', 'string', 'max:255', 'unique:departments,name'],
+                'parent_id'   => ['nullable', 'integer'],
+                'name'        => ['required', 'string', 'max:255', 'unique:departments,name'],
                 'description' => ['nullable', 'string'],
             ],
             'PUT', 'PATCH' => [
-                'parent_id' => ['nullable', 'integer'],
-                'name'      => ['required', 'string', 'max:255', "unique:departments,name,{$this->department->id}"],
+                'parent_id'   => ['nullable', 'integer'],
+                'name'        => ['required', 'string', 'max:255', "unique:departments,name,{$this->department->id}"],
                 'description' => ['nullable', 'string'],
             ],
         };

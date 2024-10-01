@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Tenants\Employee;
+use App\Models\Tenants\HRIS\Employee;
 
 class EmployeeRepository
 {

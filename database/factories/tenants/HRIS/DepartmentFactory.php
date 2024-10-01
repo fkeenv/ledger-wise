@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories\Tenants;
+namespace Database\Factories\Tenants\HRIS;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,6 +18,8 @@ class DepartmentFactory extends Factory
     {
         return [
             'parent_id'   => 0,
+            '_lft'        => 0,
+            '_rgt'        => 0,
             'name'        => $this->faker->name(),
             'description' => $this->faker->sentence(),
         ];

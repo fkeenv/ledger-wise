@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Tenants\Department;
+use App\Models\Tenants\HRIS\Department;
 
 class DepartmentRepository
 {

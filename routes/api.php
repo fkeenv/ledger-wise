@@ -2,11 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Tenants\EmployeeController;
 use App\Http\Controllers\Auth\RegistrationController;
-use App\Http\Controllers\Tenants\DepartmentController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
+use App\Http\Controllers\Tenants\HRIS\EmployeeController;
+use App\Http\Controllers\Tenants\HRIS\PositionController;
+use App\Http\Controllers\Tenants\HRIS\DepartmentController;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 foreach (config('tenancy.central_domains') as $domain) {
@@ -26,8 +27,9 @@ Route::middleware(['api', 'universal', InitializeTenancyByDomain::class, Prevent
 
         Route::prefix('hris')->group(function () {
             Route::apiResources([
-                'employees' => EmployeeController::class,
+                'employees'   => EmployeeController::class,
                 'departments' => DepartmentController::class,
+                'positions'   => PositionController::class,
             ]);
         });
     });

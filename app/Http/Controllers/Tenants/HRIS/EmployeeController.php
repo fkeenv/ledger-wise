@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Tenants;
+namespace App\Http\Controllers\Tenants\HRIS;
 
-use App\Models\Tenants\Employee;
 use App\Http\Controllers\Controller;
+use App\Models\Tenants\HRIS\Employee;
 use App\Repositories\EmployeeRepository;
-use App\Http\Requests\Tenants\EmployeeRequest;
+use App\Http\Requests\Tenants\HRIS\EmployeeRequest;
 
 class EmployeeController extends Controller
 {

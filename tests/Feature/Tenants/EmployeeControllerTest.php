@@ -5,7 +5,7 @@ namespace Tests\Feature\Tenants;
 use Faker\Factory;
 use Tests\TestCase;
 use App\Models\Tenants\User;
-use App\Models\Tenants\Employee;
+use App\Models\Tenants\HRIS\Employee;
 
 class EmployeeControllerTest extends TestCase
 {

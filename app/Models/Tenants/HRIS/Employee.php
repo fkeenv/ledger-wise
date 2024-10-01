@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Tenants;
+namespace App\Models\Tenants\HRIS;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

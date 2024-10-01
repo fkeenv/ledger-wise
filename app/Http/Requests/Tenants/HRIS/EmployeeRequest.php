@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Tenants;
+namespace App\Http\Requests\Tenants\HRIS;
 
 use App\Http\Requests\BaseRequest;
 

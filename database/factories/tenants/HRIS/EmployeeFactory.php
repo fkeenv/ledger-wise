@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories\tenants;
+namespace Database\Factories\tenants\HRIS;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 

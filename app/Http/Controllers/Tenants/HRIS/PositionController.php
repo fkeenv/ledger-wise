@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Tenants\HRIS;
 
 use App\Http\Controllers\Controller;
 use App\Models\Tenants\HRIS\Position;
-use App\Repositories\PositionRepository;
+use App\Repositories\HRIS\PositionRepository;
 use App\Http\Requests\Tenants\HRIS\PositionRequest;
 
 class PositionController extends Controller

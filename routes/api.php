@@ -9,6 +9,7 @@ use App\Http\Controllers\Tenants\HRIS\EmployeeController;
 use App\Http\Controllers\Tenants\HRIS\PositionController;
 use App\Http\Controllers\Tenants\HRIS\DepartmentController;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
+use App\Http\Controllers\Tenants\HRIS\EmployeePositionController;
 
 foreach (config('tenancy.central_domains') as $domain) {
     Route::domain($domain)->group(function () {
@@ -31,6 +32,10 @@ Route::middleware(['api', 'universal', InitializeTenancyByDomain::class, Prevent
                 'departments' => DepartmentController::class,
                 'positions'   => PositionController::class,
             ]);
+
+            Route::prefix('employees/{employee}')->group(function () {
+                Route::apiResource('positions', EmployeePositionController::class)->except(['update', 'destroy'])->names('employees.positions');
+            });
         });
     });
 });

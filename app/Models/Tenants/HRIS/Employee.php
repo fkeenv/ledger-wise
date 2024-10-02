@@ -4,6 +4,7 @@ namespace App\Models\Tenants\HRIS;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Employee extends Model
 {
@@ -17,4 +18,9 @@ class Employee extends Model
         'mobile_number',
         'birth_date',
     ];
+
+    public function positions(): BelongsToMany
+    {
+        return $this->belongsToMany(Position::class);
+    }
 }

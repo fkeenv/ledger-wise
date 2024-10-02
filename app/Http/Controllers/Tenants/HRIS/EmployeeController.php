@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Tenants\HRIS;
 
 use App\Http\Controllers\Controller;
 use App\Models\Tenants\HRIS\Employee;
-use App\Repositories\EmployeeRepository;
+use App\Repositories\HRIS\EmployeeRepository;
 use App\Http\Requests\Tenants\HRIS\EmployeeRequest;
 
 class EmployeeController extends Controller

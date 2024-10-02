@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\HRIS;
 
 use App\Models\Tenants\HRIS\Department;
 
@@ -12,7 +12,6 @@ class DepartmentRepository
     public function __construct(
         private Department $department
     ) {
-        //
     }
 
     public function get()

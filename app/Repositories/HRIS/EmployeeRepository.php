@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\HRIS;
 
 use App\Models\Tenants\HRIS\Employee;
 

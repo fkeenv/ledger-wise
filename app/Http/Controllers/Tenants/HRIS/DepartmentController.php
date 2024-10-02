@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Tenants\HRIS;
 
 use App\Http\Controllers\Controller;
 use App\Models\Tenants\HRIS\Department;
-use App\Repositories\DepartmentRepository;
+use App\Repositories\HRIS\DepartmentRepository;
 use App\Http\Requests\Tenants\HRIS\DepartmentRequest;
 
 class DepartmentController extends Controller

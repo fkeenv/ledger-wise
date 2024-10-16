@@ -10,10 +10,10 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('position_setting', function (Blueprint $table) {
+        Schema::create('position_settings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('position_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('setting_id')->constrained()->cascadeOnDelete();
+            $table->json('data')->nullable();
             $table->timestamps();
         });
     }

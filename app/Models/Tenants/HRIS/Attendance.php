@@ -11,6 +11,12 @@ class Attendance extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'attendance_id',
+        'attendance_type',
+        'date',
+    ];
+
     public function records(): HasMany
     {
         return $this->hasMany(AttendanceRecord::class);

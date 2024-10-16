@@ -15,12 +15,11 @@ class AttendanceRequest extends BaseRequest
     {
         return match ($this->method()) {
             'POST' => [
-                'time' => ['required', 'datetime'],
-                'type' => ['required', 'in:start,pause,continue,stop'],
+                'time' => ['required', 'date'],
             ],
             'PUT', 'PATCH' => [
-                'time' => ['required', 'datetime'],
-                'type' => ['required', 'in:start,pause,continue,stop'],
+                'time' => ['required', 'date'],
+                'type' => ['required', 'in:pause,continue,stop'],
             ],
         };
     }

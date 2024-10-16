@@ -13,9 +13,8 @@ class AttendanceRecord extends Model
 
     protected $fillable = [
         'attendance_id',
-        'time_in',
-        'time_out',
-        'status',
+        'time',
+        'type',
     ];
 
     public function attendance(): BelongsTo

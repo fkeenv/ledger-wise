@@ -10,12 +10,11 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('settings', function (Blueprint $table) {
+        Schema::create('employee_benefits', function (Blueprint $table) {
             $table->id();
-            $table->morphs('setting');
-            $table->string('name');
-            $table->string('description');
-            $table->json('data');
+            $table->foreignId('employee_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('employment_benefit_id')->constrained()->cascadeOnDelete();
+            $table->json('data')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('settings');
+        Schema::dropIfExists('employee_benefits');
     }
 };

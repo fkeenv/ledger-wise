@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Tenants\HRIS;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Tenants\HRIS\Employee;
 use App\Models\Tenants\HRIS\Attendance;
@@ -36,7 +35,7 @@ class EmployeeAttendanceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Attendance $attendance)
+    public function show(Employee $employee, Attendance $attendance)
     {
         return $this->attendanceRepository->show($attendance);
     }
@@ -44,15 +43,15 @@ class EmployeeAttendanceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Attendance $attendance)
+    public function update(AttendanceRequest $request, Employee $employee, Attendance $attendance)
     {
-        return $this->attendanceRepository->update($request->all(), $attendance);
+        return $this->attendanceRepository->update($request, $attendance);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Attendance $attendance)
+    public function destroy(Employee $employee, Attendance $attendance)
     {
         return $this->attendanceRepository->delete($attendance);
     }

@@ -20,7 +20,7 @@ class AttendanceRepository
 
     public function get()
     {
-        return $this->attendance->get();
+        return $this->attendance->with('records')->get();
     }
 
     public function create(AttendanceRequest $request, Model $model)
@@ -30,12 +30,17 @@ class AttendanceRepository
 
     public function show(Attendance $attendance)
     {
-        return $attendance;
+        return $attendance->with('records')->first();
     }
 
-    public function update(array $request, Attendance $attendance)
+    public function update(AttendanceRequest $request, Attendance $attendance)
     {
-        return tap($attendance)->update($request);
+        $attendance->records()->create([
+            'time' => $request->get('time'),
+            'type' => $request->get('type'),
+        ]);
+
+        return $attendance->with('records')->first();
     }
 
     public function delete(Attendance $attendance)
@@ -54,8 +59,10 @@ class AttendanceRepository
 
             $attendance->records()->create([
                 'time' => $request->get('time'),
-                'type' => $request->get('type'),
+                'type' => 'start',
             ]);
+
+            return $attendance->with('records')->first();
         });
     }
 }

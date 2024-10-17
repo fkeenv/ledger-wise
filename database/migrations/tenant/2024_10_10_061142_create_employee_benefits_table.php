@@ -14,6 +14,8 @@ return new class () extends Migration {
             $table->id();
             $table->foreignId('employee_id')->constrained()->cascadeOnDelete();
             $table->foreignId('employment_benefit_id')->constrained()->cascadeOnDelete();
+            $table->integer('employer_weight')->nullable()->comment('Employer contribution - percentage');
+            $table->integer('employee_weight')->nullable()->comment('Employee contribution - percentage');
             $table->json('data')->nullable();
             $table->timestamps();
         });

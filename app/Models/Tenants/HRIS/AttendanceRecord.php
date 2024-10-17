@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Models\Tenants;
+namespace App\Models\Tenants\HRIS;
 
-use App\Models\Tenants\HRIS\Attendance;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

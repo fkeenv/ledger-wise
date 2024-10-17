@@ -10,6 +10,7 @@ use App\Http\Controllers\Tenants\HRIS\PositionController;
 use App\Http\Controllers\Tenants\HRIS\DepartmentController;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 use App\Http\Controllers\Tenants\HRIS\EmployeePositionController;
+use App\Http\Controllers\Tenants\HRIS\EmploymentBenefitController;
 use App\Http\Controllers\Tenants\HRIS\EmployeeAttendanceController;
 
 foreach (config('tenancy.central_domains') as $domain) {
@@ -28,11 +29,10 @@ Route::middleware(['api', 'universal', InitializeTenancyByDomain::class, Prevent
         Route::delete('logout', [LoginController::class, 'destroy'])->name('authenticate.logout');
 
         Route::prefix('hris')->group(function () {
-            Route::apiResources([
-                'employees'   => EmployeeController::class,
-                'departments' => DepartmentController::class,
-                'positions'   => PositionController::class,
-            ]);
+            Route::apiResource('employees', EmployeeController::class);
+            Route::apiResource('departments', DepartmentController::class);
+            Route::apiResource('positions', PositionController::class);
+            Route::apiResource('employment-benefits', EmploymentBenefitController::class)->parameter('employment-benefits', 'employmentBenefit');
 
             Route::prefix('employees/{employee}')->group(function () {
                 Route::apiResource('positions', EmployeePositionController::class)->except(['update', 'destroy'])->names('employees.positions');

@@ -15,4 +15,11 @@ class EmploymentBenefit extends Model
         'sector',
         'type',
     ];
+
+    public function employees()
+    {
+        return $this->belongsToMany(Employee::class, 'employee_benefits')->using(EmployeeBenefit::class)
+            ->withPivot('employer_weight', 'employee_weight', 'data')
+            ->withTimestamps();
+    }
 }

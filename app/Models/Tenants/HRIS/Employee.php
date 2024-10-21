@@ -23,4 +23,11 @@ class Employee extends Model
     {
         return $this->belongsToMany(Position::class);
     }
+
+    public function benefits(): BelongsToMany
+    {
+        return $this->belongsToMany(EmploymentBenefit::class, 'employee_benefits')->using(EmployeeBenefit::class)
+            ->withPivot('employer_weight', 'employee_weight', 'data')
+            ->withTimestamps();
+    }
 }

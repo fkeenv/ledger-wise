@@ -5,7 +5,7 @@ namespace App\Casts;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 
-class ConvertJson implements CastsAttributes
+class AsCurrency implements CastsAttributes
 {
     /**
      * Cast the given value.
@@ -14,11 +14,7 @@ class ConvertJson implements CastsAttributes
      */
     public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        if (! is_null($value)) {
-            return json_decode($value, true);
-        }
-
-        return null;
+        return $value / 100;
     }
 
     /**
@@ -28,6 +24,6 @@ class ConvertJson implements CastsAttributes
      */
     public function set(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        return json_encode($value);
+        return $value * 100;
     }
 }

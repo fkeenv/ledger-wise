@@ -14,8 +14,7 @@ return new class () extends Migration {
             $table->id();
             $table->foreignId('employee_id')->constrained()->cascadeOnDelete();
             $table->bigInteger('salary')->default(0);
-            $table->bigInteger('daily_salary')->default(0);
-            $table->bigInteger('max_salary')->default(0);
+            $table->enum('salary_type', ['daily', 'monthly', 'hourly']);
             $table->integer('tax')->default(0);
             $table->enum('employment_type', ['regular', 'part-time', 'internship', 'contract']);
             $table->dateTime('start_date');

@@ -4,6 +4,7 @@ namespace App\Models\Tenants\HRIS;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -42,5 +43,10 @@ class Employee extends Model
     public function attendances(): MorphMany
     {
         return $this->morphMany(Attendance::class, 'recordable');
+    }
+
+    public function salaries(): HasMany
+    {
+        return $this->hasMany(Salary::class);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Models\Tenants\HRIS;
 
-use App\Casts\ConvertJson;
+use App\Casts\AsJson;
 use App\Casts\ConvertToHundredths;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,7 +26,7 @@ class EmployeeBenefit extends Pivot
         return [
             'employer_weight' => ConvertToHundredths::class,
             'employee_weight' => ConvertToHundredths::class,
-            'data' => ConvertJson::class,
+            'data' => AsJson::class,
         ];
     }
 }

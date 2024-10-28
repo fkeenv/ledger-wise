@@ -9,6 +9,7 @@ use App\Http\Controllers\Tenants\HRIS\EmployeeController;
 use App\Http\Controllers\Tenants\HRIS\PositionController;
 use App\Http\Controllers\Tenants\HRIS\DepartmentController;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
+use App\Http\Controllers\Tenants\HRIS\EmployeeSalaryController;
 use App\Http\Controllers\Tenants\HRIS\EmployeeBenefitController;
 use App\Http\Controllers\Tenants\HRIS\EmployeeSettingController;
 use App\Http\Controllers\Tenants\HRIS\EmployeePositionController;
@@ -41,6 +42,7 @@ Route::middleware(['api', 'universal', InitializeTenancyByDomain::class, Prevent
                 Route::apiResource('attendances', EmployeeAttendanceController::class)->names('employees.attendances');
                 Route::apiResource('benefits', EmployeeBenefitController::class)->except(['show', 'update'])->parameter('benefits', 'employeeBenefit')->names('employees.benefits');
                 Route::apiResource('settings', EmployeeSettingController::class)->parameter('settings', 'employeeSetting')->names('employees.settings');
+                Route::apiResource('salaries', EmployeeSalaryController::class)->names('employees.salaries');
             });
         });
     });

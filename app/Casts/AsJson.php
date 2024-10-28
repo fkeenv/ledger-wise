@@ -5,7 +5,7 @@ namespace App\Casts;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 
-class ConvertJson implements CastsAttributes
+class AsJson implements CastsAttributes
 {
     /**
      * Cast the given value.

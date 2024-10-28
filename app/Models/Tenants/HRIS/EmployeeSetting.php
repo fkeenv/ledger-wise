@@ -2,8 +2,8 @@
 
 namespace App\Models\Tenants\HRIS;
 
+use App\Casts\AsJson;
 use App\Casts\AsCurrency;
-use App\Casts\ConvertJson;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -32,7 +32,7 @@ class EmployeeSetting extends Model
     {
         return [
             'salary' => AsCurrency::class,
-            'data' => ConvertJson::class,
+            'data' => AsJson::class,
         ];
     }
 

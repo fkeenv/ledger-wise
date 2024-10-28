@@ -18,9 +18,9 @@ class AttendanceRepository
         //
     }
 
-    public function get()
+    public function get(Model $model)
     {
-        return $this->attendance->with('records')->get();
+        return $model->attendances()->with('records')->get();
     }
 
     public function create(AttendanceRequest $request, Model $model)
@@ -52,9 +52,9 @@ class AttendanceRepository
     {
         return DB::transaction(function () use ($request, $model) {
             $attendance = $this->attendance->create([
-                'attendance_id' => $model->id,
-                'attendance_type' => get_class($model),
-                'date' => now(),
+                'recordable_id'   => $model->id,
+                'recordable_type' => get_class($model),
+                'date'            => now(),
             ]);
 
             $attendance->records()->create([

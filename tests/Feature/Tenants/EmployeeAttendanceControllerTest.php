@@ -17,8 +17,8 @@ class EmployeeAttendanceControllerTest extends TestCase
         $user = User::factory()->create();
         $employee = Employee::factory()->create();
         Attendance::factory()->create([
-            'attendance_id' => $employee->id,
-            'attendance_type' => get_class($employee),
+            'recordable_id' => $employee->id,
+            'recordable_type' => get_class($employee),
         ]);
 
         $response = $this->actingAs($user)->get("/api/hris/employees/{$employee->id}/attendances");
@@ -27,8 +27,8 @@ class EmployeeAttendanceControllerTest extends TestCase
             ->assertJsonStructure([
                 0 => [
                     'id',
-                    'attendance_type',
-                    'attendance_id',
+                    'recordable_type',
+                    'recordable_id',
                     'date',
                     'created_at',
                     'updated_at',
@@ -44,8 +44,8 @@ class EmployeeAttendanceControllerTest extends TestCase
         $user = User::factory()->create();
         $employee = Employee::factory()->create();
         $attendance = Attendance::factory()->create([
-            'attendance_id' => $employee->id,
-            'attendance_type' => get_class($employee),
+            'recordable_id' => $employee->id,
+            'recordable_type' => get_class($employee),
         ]);
 
         $response = $this->actingAs($user)->get("/api/hris/employees/{$employee->id}/attendances/{$attendance->id}");
@@ -53,8 +53,8 @@ class EmployeeAttendanceControllerTest extends TestCase
         $response
             ->assertJsonStructure([
                 'id',
-                'attendance_type',
-                'attendance_id',
+                'recordable_type',
+                'recordable_id',
                 'date',
                 'created_at',
                 'updated_at',
@@ -78,8 +78,8 @@ class EmployeeAttendanceControllerTest extends TestCase
             ->assertJsonStructure(
                 [
                     'id',
-                    'attendance_id',
-                    'attendance_type',
+                    'recordable_id',
+                    'recordable_type',
                     'date',
                     'created_at',
                     'updated_at',
@@ -95,10 +95,10 @@ class EmployeeAttendanceControllerTest extends TestCase
         $user = User::factory()->create();
         $employee = Employee::factory()->create();
         $attendance = Attendance::factory()->create([
-            'attendance_id' => $employee->id,
-            'attendance_type' => get_class($employee),
+            'recordable_id' => $employee->id,
+            'recordable_type' => get_class($employee),
         ]);
-        $enum = ['pause', 'continue', 'end'];
+        $enum = ['pause', 'continue', 'stop'];
         $rand = rand(0, 2);
         $data = [
             'time' => now(),
@@ -111,8 +111,8 @@ class EmployeeAttendanceControllerTest extends TestCase
             ->assertJsonStructure(
                 [
                     'id',
-                    'attendance_id',
-                    'attendance_type',
+                    'recordable_id',
+                    'recordable_type',
                     'date',
                     'created_at',
                     'updated_at',
@@ -128,8 +128,8 @@ class EmployeeAttendanceControllerTest extends TestCase
         $user = User::factory()->create();
         $employee = Employee::factory()->create();
         $attendance = Attendance::factory()->create([
-            'attendance_id' => $employee->id,
-            'attendance_type' => get_class($employee),
+            'recordable_id' => $employee->id,
+            'recordable_type' => get_class($employee),
         ]);
 
         $response = $this->actingAs($user)->delete("/api/hris/employees/{$employee->id}/attendances/{$attendance->id}");
@@ -138,8 +138,8 @@ class EmployeeAttendanceControllerTest extends TestCase
             ->assertJsonStructure(
                 [
                     'id',
-                    'attendance_id',
-                    'attendance_type',
+                    'recordable_id',
+                    'recordable_type',
                     'date',
                     'created_at',
                     'updated_at',

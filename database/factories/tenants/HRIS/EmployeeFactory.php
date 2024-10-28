@@ -16,13 +16,13 @@ class EmployeeFactory extends Factory
      */
     public function definition(): array
     {
-        $rand = rand(0, 1);
-        $gender = ['male', 'female'];
+        $gender = $this->faker->randomElement(['male', 'female']);
+
         return [
-            'first_name'    => $this->faker->firstName($gender[$rand]),
+            'first_name'    => $this->faker->firstName($gender),
             'middle_name'   => $this->faker->lastName(),
             'last_name'     => $this->faker->lastName(),
-            'gender'        => $gender[$rand],
+            'gender'        => $gender,
             'mobile_number' => $this->faker->phoneNumber(),
             'birth_date'    => $this->faker->date(),
         ];

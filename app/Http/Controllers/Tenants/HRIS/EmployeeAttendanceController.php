@@ -19,9 +19,9 @@ class EmployeeAttendanceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Employee $employee)
     {
-        return $this->attendanceRepository->get();
+        return $this->attendanceRepository->get($employee);
     }
 
     /**

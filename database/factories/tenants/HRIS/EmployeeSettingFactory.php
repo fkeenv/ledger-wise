@@ -19,7 +19,7 @@ class EmployeeSettingFactory extends Factory
         return [
             'salary' => rand(1000, 10000000),
             'salary_type' => $this->faker->randomElement(['monthly', 'daily', 'hourly']),
-            'employment_type' => $this->faker->randomElement(['regular', 'part-time', 'contract', 'probationary']),
+            'employment_type' => $this->faker->randomElement(['regular', 'part-time', 'internship', 'contract']),
             'tax' => rand(1, 50),
             'start_date' => $this->faker->date(),
             'regular_date' => $this->faker->date(),

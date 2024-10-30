@@ -20,7 +20,7 @@ class EmployeeSalaryController extends Controller
      */
     public function index(Request $request, Employee $employee)
     {
-        //
+        return $this->employeeSalaryRepository->get($employee);
     }
 
     /**
@@ -36,7 +36,7 @@ class EmployeeSalaryController extends Controller
      */
     public function show(Employee $employee, Salary $salary)
     {
-        //
+        return $this->employeeSalaryRepository->show($employee, $salary);
     }
 
     /**
@@ -44,7 +44,7 @@ class EmployeeSalaryController extends Controller
      */
     public function update(Request $request, Employee $employee, Salary $salary)
     {
-        //
+        return $this->employeeSalaryRepository->update($request, $employee, $salary);
     }
 
     /**
@@ -52,6 +52,6 @@ class EmployeeSalaryController extends Controller
      */
     public function destroy(Employee $employee, Salary $salary)
     {
-        //
+        return $this->employeeSalaryRepository->destroy($employee, $salary);
     }
 }

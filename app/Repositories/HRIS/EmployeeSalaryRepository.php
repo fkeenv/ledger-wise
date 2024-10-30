@@ -11,54 +11,53 @@ class EmployeeSalaryRepository
 {
     public function get(Employee $employee)
     {
-        return $employee->get();
+        return $employee->salaries;
     }
 
     // Employee Salary
     public function create(Request $request, Employee $employee): Salary
     {
-        $tax = $employee->setting->tax;
-        $salaryRate = $this->getSalaryRate($employee);
-        $benefits = [];
-
-        $totalDaysWorked = $this->getAttendances($request, $employee)->count();
-        $grossSalary = $salaryRate * $totalDaysWorked;
-
-        // Get all the benefits of the employee
-        if ($employee->benefits->count()) {
-            $employee->benefits()->each(function ($benefit) use (&$grossSalary, &$benefits) {
-                $employerShare = $benefit->pivot->employer_weight / 100;
-                $amount = $employerShare * $grossSalary;
-                $benefits[] = [
-                    'name'   => $benefit->name,
-                    'amount' => $amount,
-                ];
-            });
-        }
-
-        // Apply Tax
-        $taxAmount = $grossSalary * ($tax);
-        $netSalary = $grossSalary - $taxAmount;
-
-        // If the employee has benefits, deduct the amount from the net salary
-        if (collect($benefits)->isNotEmpty()) {
-            collect($benefits)->each(function ($benefit) use (&$netSalary) {
-                $netSalary -= $benefit['amount'];
-            });
-        }
+        $data = $this->getData($request, $employee);
 
         return $employee->salaries()->create([
-            'tax_amount'         => $tax,
-            'gross_salary'       => $grossSalary,
-            'net_salary'         => $netSalary,
-            'salary_rate'        => $salaryRate,
-            'total_days_worked'  => $totalDaysWorked,
+            'tax_amount'         => $data['tax'],
+            'gross_salary'       => $data['grossSalary'],
+            'net_salary'         => $data['netSalary'],
+            'salary_rate'        => $data['salaryRate'],
+            'total_days_worked'  => $data['totalDaysWorked'],
             'total_minutes_late' => 0, // TO DO: Implement this
             'cut_off_start'      => $this->getCutOffDates($request)['start'],
             'cut_off_end'        => $this->getCutOffDates($request)['end'],
             'date_generated'     => now(),
-            'benefits'           => $benefits,
+            'benefits'           => $data['benefits'],
         ]);
+    }
+
+    public function show(Employee $employee, Salary $salary)
+    {
+        return $employee->salaries()->findOrFail($salary->id);
+    }
+
+    public function update(Request $request, Employee $employee, Salary $salary)
+    {
+        // WARNING: This should only be used by one person (preferable the top management)
+        return tap($salary)->update([
+            'amount'             => $request->amount,
+            'net_salary'         => $request->net_salary,
+            'tax_amount'         => $request->tax_amount,
+            'gross_salary'       => $request->gross_salary,
+            'total_days_worked'  => $request->total_days_worked,
+            'total_minutes_late' => $request->total_minutes_late,
+            'cut_off_start'      => $request->cut_off_start,
+            'cut_off_end'        => $request->cut_off_end,
+            'date_generated'     => $request->date_generated,
+            'benefits'           => $request->benefits,
+        ]);
+    }
+
+    public function destroy(Employee $employee, Salary $salary)
+    {
+        return $employee->salaries()->findOrFail($salary->id)->delete();
     }
 
     private function getCutOffDates(Request $request): array
@@ -102,5 +101,47 @@ class EmployeeSalaryRepository
         }
 
         return 0;
+    }
+
+    private function getData(Request $request, Employee $employee)
+    {
+        $tax = $employee->setting->tax;
+        $salaryRate = $this->getSalaryRate($employee);
+        $benefits = [];
+
+        $totalDaysWorked = $this->getAttendances($request, $employee)->count();
+        $grossSalary = $salaryRate * $totalDaysWorked;
+
+        // Get all the benefits of the employee
+        if ($employee->benefits->count()) {
+            $employee->benefits()->each(function ($benefit) use (&$grossSalary, &$benefits) {
+                $employerShare = $benefit->pivot->employer_weight / 100;
+                $amount = $employerShare * $grossSalary;
+                $benefits[] = [
+                    'name'   => $benefit->name,
+                    'amount' => $amount,
+                ];
+            });
+        }
+
+        // Apply Tax
+        $taxAmount = $grossSalary * ($tax);
+        $netSalary = $grossSalary - $taxAmount;
+
+        // If the employee has benefits, deduct the amount from the net salary
+        if (collect($benefits)->isNotEmpty()) {
+            collect($benefits)->each(function ($benefit) use (&$netSalary) {
+                $netSalary -= $benefit['amount'];
+            });
+        }
+
+        return [
+            'tax'             => $tax,
+            'grossSalary'     => $grossSalary,
+            'netSalary'       => $netSalary,
+            'salaryRate'      => $salaryRate,
+            'totalDaysWorked' => $totalDaysWorked,
+            'benefits'        => $benefits,
+        ];
     }
 }

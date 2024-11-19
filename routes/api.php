@@ -8,6 +8,7 @@ use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use App\Http\Controllers\Tenants\HRIS\EmployeeController;
 use App\Http\Controllers\Tenants\HRIS\PositionController;
 use App\Http\Controllers\Tenants\HRIS\DepartmentController;
+use App\Http\Controllers\Tenants\Accounting\AccountController;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 use App\Http\Controllers\Tenants\HRIS\EmployeeSalaryController;
 use App\Http\Controllers\Tenants\HRIS\EmployeeBenefitController;
@@ -31,6 +32,7 @@ Route::middleware(['api', 'universal', InitializeTenancyByDomain::class, Prevent
     Route::middleware('auth:sanctum')->group(function () {
         Route::delete('logout', [LoginController::class, 'destroy'])->name('authenticate.logout');
 
+        // HRIS
         Route::prefix('hris')->group(function () {
             Route::apiResource('employees', EmployeeController::class);
             Route::apiResource('departments', DepartmentController::class);
@@ -44,6 +46,11 @@ Route::middleware(['api', 'universal', InitializeTenancyByDomain::class, Prevent
                 Route::apiResource('settings', EmployeeSettingController::class)->parameter('settings', 'employeeSetting')->names('employees.settings');
                 Route::apiResource('salaries', EmployeeSalaryController::class)->names('employees.salaries');
             });
+        });
+
+        // Accounting
+        Route::prefix('accg')->group(function () {
+            Route::apiResource('accounts', AccountController::class);
         });
     });
 });

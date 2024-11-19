@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Tenants;
+namespace Tests\Feature\Tenants\HRIS;
 
 use Faker\Factory;
 use Tests\TestCase;

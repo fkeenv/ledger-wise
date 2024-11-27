@@ -13,6 +13,7 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 use App\Http\Controllers\Tenants\HRIS\EmployeeSalaryController;
 use App\Http\Controllers\Tenants\HRIS\EmployeeBenefitController;
 use App\Http\Controllers\Tenants\HRIS\EmployeeSettingController;
+use App\Http\Controllers\Tenants\Accounting\SubAccountController;
 use App\Http\Controllers\Tenants\HRIS\EmployeePositionController;
 use App\Http\Controllers\Tenants\HRIS\EmploymentBenefitController;
 use App\Http\Controllers\Tenants\HRIS\EmployeeAttendanceController;
@@ -51,6 +52,9 @@ Route::middleware(['api', 'universal', InitializeTenancyByDomain::class, Prevent
         // Accounting
         Route::prefix('accg')->group(function () {
             Route::apiResource('accounts', AccountController::class);
+            Route::prefix('accounts/{account}')->group(function () {
+                Route::apiResource('sub-accounts', SubAccountController::class)->parameter('sub-accounts', 'subAccount');
+            });
         });
     });
 });

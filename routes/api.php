@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use App\Http\Controllers\Tenants\HRIS\EmployeeController;
 use App\Http\Controllers\Tenants\HRIS\PositionController;
+use App\Http\Controllers\Tenants\Common\AddressController;
 use App\Http\Controllers\Tenants\HRIS\DepartmentController;
 use App\Http\Controllers\Tenants\Accounting\AccountController;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -57,6 +58,11 @@ Route::middleware(['api', 'universal', InitializeTenancyByDomain::class, Prevent
             Route::prefix('accounts/{account}')->group(function () {
                 Route::apiResource('sub-accounts', SubAccountController::class)->parameter('sub-accounts', 'subAccount');
             });
+        });
+
+        // Common
+        Route::prefix('common')->group(function () {
+            Route::apiResource('{model}/{id}/addresses', AddressController::class);
         });
     });
 });

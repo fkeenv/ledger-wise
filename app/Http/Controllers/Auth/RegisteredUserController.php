@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\Tenant;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Auth\Events\Registered;
 
 class RegisteredUserController extends Controller
 {
@@ -30,22 +32,35 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        return DB::transaction(function () use ($request) {
+            $request->validate([
+                'name'              => 'required|string|max:255',
+                'email'             => 'required|string|lowercase|email|max:255|unique:'.User::class,
+                'password'          => ['required', 'confirmed', Rules\Password::defaults()],
+                'site_name'         => 'required|string|max:255|lowercase|unique:'.Tenant::class.',id',
+            ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+            $tenant = Tenant::create([
+                'id'                  => $request->site_name,
+                'tenancy_db_name'     => $request->site_name,
+            ]);
 
-        event(new Registered($user));
+            $tenant->domains()->create([
+                'domain' => $request->site_name.'.ledger-wise.test',
+            ]);
 
-        Auth::login($user);
+            $user = User::create([
+                'tenant_id' => $tenant->id,
+                'name'      => $request->name,
+                'email'     => $request->email,
+                'password'  => Hash::make($request->password),
+            ]);
 
-        return redirect(route('dashboard', absolute: false));
+            event(new Registered($user));
+
+            Auth::login($user);
+
+            return redirect(route('dashboard', absolute: false));
+        });
     }
 }

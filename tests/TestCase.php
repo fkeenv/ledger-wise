@@ -3,6 +3,7 @@
 namespace Tests;
 
 use App\Models\Tenant;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
@@ -32,5 +33,19 @@ abstract class TestCase extends BaseTestCase
         $tenant->domains()->create(['domain' => 'test.ledger-wise.test']);
 
         tenancy()->initialize($tenant);
+
+        URL::forceRootUrl('https://test.ledger-wise.test');
+    }
+
+    public function tearDown(): void
+    {
+        config([
+            'tenancy.queue_database_deletion' => false,
+            'tenancy.delete_database_after_tenant_deletion' => true,
+        ]);
+
+        Tenant::all()->where('id', '!=', 'norwood')->each->delete();
+
+        parent::tearDown();
     }
 }

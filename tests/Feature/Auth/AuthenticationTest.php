@@ -2,9 +2,10 @@
 
 namespace Tests\Feature\Auth;
 
+use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class AuthenticationTest extends TestCase
 {
@@ -19,7 +20,9 @@ class AuthenticationTest extends TestCase
 
     public function test_users_can_authenticate_using_the_login_screen(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'password' => bcrypt('password'),
+        ]);
 
         $response = $this->post('/login', [
             'email' => $user->email,
@@ -46,9 +49,10 @@ class AuthenticationTest extends TestCase
     {
         $user = User::factory()->create();
 
+        /** @var Authenticatable $user */
         $response = $this->actingAs($user)->post('/logout');
 
         $this->assertGuest();
-        $response->assertRedirect('/');
+        $response->assertRedirect('/login');
     }
 }

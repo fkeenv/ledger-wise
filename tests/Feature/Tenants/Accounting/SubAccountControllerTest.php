@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Tenants\HRIS;
+namespace Tests\Feature\Tenants\Accounting;
 
 use Tests\TestCase;
 use App\Models\Tenants\User;

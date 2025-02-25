@@ -6,6 +6,7 @@ use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 use App\Models\Tenants\HRIS\Employee;
 use App\Models\Tenants\HRIS\Position;
+use App\Models\Tenants\HRIS\Department;
 use App\Models\Tenants\HRIS\EmploymentBenefit;
 
 class EmployeeSeeder extends Seeder
@@ -17,7 +18,10 @@ class EmployeeSeeder extends Seeder
     {
         $faker = Faker::create();
         $employee = Employee::factory()->create();
-        $position = Position::factory()->create();
+        $department = Department::factory()->create();
+        $position = Position::factory()->create([
+            'department_id' => $department->id,
+        ]);
         $employmentBenefit = EmploymentBenefit::factory()->create();
         $employee->positions()->attach($position->id);
         $employee->benefits()->attach($employmentBenefit->id, [
@@ -41,9 +45,6 @@ class EmployeeSeeder extends Seeder
         for ($i = 20; $i = 20; $i++) {
             $employee->attendances()->create([
                 'date' => $faker->date(),
-                'time_in' => $faker->time(),
-                'time_out' => $faker->time(),
-                'data' => json_encode(['key' => 'value']),
             ]);
         }
     }

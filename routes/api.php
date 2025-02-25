@@ -17,6 +17,7 @@ use App\Http\Controllers\Tenants\HRIS\EmployeeBenefitController;
 use App\Http\Controllers\Tenants\HRIS\EmployeeSettingController;
 use App\Http\Controllers\Tenants\Accounting\SubAccountController;
 use App\Http\Controllers\Tenants\HRIS\EmployeePositionController;
+use App\Http\Controllers\Tenants\Accounting\TransactionController;
 use App\Http\Controllers\Tenants\HRIS\EmploymentBenefitController;
 use App\Http\Controllers\Tenants\HRIS\EmployeeAttendanceController;
 
@@ -58,6 +59,7 @@ Route::middleware(['api', 'universal', InitializeTenancyByDomain::class, Prevent
             Route::prefix('accounts/{account}')->group(function () {
                 Route::apiResource('sub-accounts', SubAccountController::class)->parameter('sub-accounts', 'subAccount');
             });
+            Route::apiResource('transactions', TransactionController::class);
         });
 
         // Common

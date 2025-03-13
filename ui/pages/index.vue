@@ -6,12 +6,12 @@
       </div>
 
       <div class="flex items-center space-x-4">
-        <GuestHomeColorMode />
+        <GuestMeColorMode />
       </div>
     </header>
 
     <main class="flex-grow flex items-center justify-center">
-      <GuestHomeTerminal class="w-full" />
+      <GuestMeTerminal class="w-full" />
     </main>
   </div>
 </template>
